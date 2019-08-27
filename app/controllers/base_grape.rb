@@ -14,4 +14,9 @@ class BaseGrape < Grape::API
   get '/' do
     { status: 'ok' }
   end
+
+  add_swagger_documentation(
+    mount_path:  '/api/swagger',
+    doc_version: '0.1.0'
+  )
 end
