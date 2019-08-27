@@ -8,6 +8,9 @@ class BaseGrape < Grape::API
   rescue_from(ActiveRecord::RecordInvalid) { |e| valid_error!(e) }
   rescue_from(Grape::Exceptions::ValidationErrors) { |e| valid_error!(e) }
 
+  # add the handle need before this code
+  mount SignGrape
+
   get '/' do
     { status: 'ok' }
   end
