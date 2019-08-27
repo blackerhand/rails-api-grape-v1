@@ -62,7 +62,7 @@ rails api 最佳实践.
 创建项目 `rails new grape_api --api -d mysql -T --api`
 
 
-# v0.1
+### v0.1
 
 搭建基本环境, 集成:
 
@@ -74,3 +74,9 @@ rails api 最佳实践.
 - sawagger
 - rubocop
 - kaminari
+
+### v0.2
+
+- 添加 users 注册登录
+- 添加 grape-entity
+- 修复 0.1 的 bug
