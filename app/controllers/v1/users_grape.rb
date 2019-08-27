@@ -46,5 +46,9 @@ module V1
       @user.update!(password: params[:passwd], code: nil)
       data!('Success')
     end
+
+    get 'info' do
+      data_record!(@current_user, Entities::User::Info)
+    end
   end
 end

@@ -38,10 +38,12 @@ gem 'figaro', '~> 1.1'
 # grape
 gem 'grape', '~> 1.2'
 gem 'hashie', '~> 3.6'
+gem 'grape-entity', '~> 0.7'
 
 # swagger
 gem 'grape-swagger', '~> 0.32' # grape doc
 gem 'grape-swagger-rails', '~> 0.3' # a web page
+gem 'grape-swagger-entity', '~> 0.3'
 
 # paginate
 gem 'kaminari', '~> 0.17'
