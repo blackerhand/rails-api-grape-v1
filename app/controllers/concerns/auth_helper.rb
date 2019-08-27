@@ -9,7 +9,7 @@ module AuthHelper
   end
 
   def authenticate_required?
-    !RANK::AUTH_UN_REQUIRED.include?(request.path)
+    !GRAPE_API::AUTH_UN_REQUIRED.include?(request.path)
   end
 
   def current_user
