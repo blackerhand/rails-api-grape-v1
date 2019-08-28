@@ -45,6 +45,10 @@ gem 'grape-swagger', '~> 0.32' # grape doc
 gem 'grape-swagger-rails', '~> 0.3' # a web page
 gem 'grape-swagger-entity', '~> 0.3'
 
+
+# taggable
+gem 'acts-as-taggable-on', '~> 6.0'
+
 # paginate
 gem 'kaminari', '~> 0.17'
 

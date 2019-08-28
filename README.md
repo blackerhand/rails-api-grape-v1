@@ -80,3 +80,8 @@ rails api 最佳实践.
 - 添加 users 注册登录
 - 添加 grape-entity
 - 修复 0.1 的 bug
+
+### v0.3
+
+- `acts-as-taggable-on`
+- `rake acts_as_taggable_on_engine:install:migrations`
