@@ -9,7 +9,7 @@ class User < ApplicationRecord
   def gen_code
     return code if code.present? && Time.current - updated_at < 60
 
-    update!(code: rand(999999))
+    update!(code: rand(999_999))
     code
   end
 end

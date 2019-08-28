@@ -13,6 +13,7 @@ AllCops:
     - 'Capfile'
     - 'Gemfile'
     - 'factories/**'
+    - 'app/models/comment.rb'
 
 Metrics/LineLength:
   Enabled: false
