@@ -48,6 +48,7 @@ gem 'grape-swagger-entity', '~> 0.3'
 
 # taggable
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'acts_as_commentable_with_threading', '~> 2.0.1'
 
 # paginate
 gem 'kaminari', '~> 0.17'

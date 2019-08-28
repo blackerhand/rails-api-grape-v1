@@ -85,3 +85,5 @@ rails api 最佳实践.
 
 - `acts-as-taggable-on`
 - `rake acts_as_taggable_on_engine:install:migrations`
+- `acts_as_commentable_with_threading`
+- `rails generate acts_as_commentable_with_threading_migration`
