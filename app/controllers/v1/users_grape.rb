@@ -11,8 +11,7 @@ module V1
       auth_error!('The email not exists') if @user.nil?
       auth_error!('The password is incorrect') unless @user.authenticate(params[:passwd])
 
-      @payload = @user.payload
-      data!(token: Svc::JwtSignature.sign(@payload))
+      data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
     params do
@@ -20,8 +19,8 @@ module V1
       requires :nickname, :passwd, allow_blank: false, type: String
     end
     post '/sign_up' do
-      @payload = User.create!(email: params[:email], nickname: params[:nickname], password: params[:passwd]).payload
-      data!(token: Svc::JwtSignature.sign(@payload))
+      @user = User.create!(email: params[:email], nickname: params[:nickname], password: params[:passwd])
+      data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
     params do
