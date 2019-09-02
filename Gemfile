@@ -11,7 +11,7 @@ gem 'rails-i18n', '~> 5.1'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 
 # Use Puma as the app server
-gem 'puma', '~> 4.0'
+gem 'puma', '~> 3.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -74,9 +74,9 @@ group :development do
 
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-rails', '~> 1.3', require: false
-  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
+  gem 'capistrano3-puma', '~> 3.1.1'
+  gem 'capistrano-rvm', '~> 0.1.2', require: false
+  gem 'capistrano-sidekiq', '~> 1.0.2', github: 'seuros/capistrano-sidekiq'
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 end
