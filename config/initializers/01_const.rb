@@ -6,4 +6,6 @@ module GRAPE_API
 
   AUTH_UN_REQUIRED = %w[POST/v1/users/sign_in POST/v1/users/sign_up
                         POST/v1/users/send_mail POST/v1/users/reset]
+
+  OWNER_REQUIRED = %w[POST/v1/posts/:id DELETE/v1/posts/:id PUT/v1/items/:id]
 end

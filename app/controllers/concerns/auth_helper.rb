@@ -11,4 +11,12 @@ module AuthHelper
   def authenticate_required?
     !GRAPE_API::AUTH_UN_REQUIRED.include?(resource_name)
   end
+
+  def owner_required?
+    GRAPE_API::OWNER_REQUIRED.include?(resource_name)
+  end
+
+  def verify_owner!
+    raise OwnerDeniedError, 'You is not the owner' if current_user.nil? || current_user_id != current_record.owner
+  end
 end

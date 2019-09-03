@@ -2,7 +2,10 @@
 class SignGrape < BaseGrape
   helpers AuthHelper
 
-  before { verify_jwt! if authenticate_required? }
+  before do
+    verify_jwt! if authenticate_required?
+    verify_owner! if owner_required?
+  end
 
   rescue_from(SignError) { |e| valid_error!(e) }
   rescue_from(Svc::JwtSignature::SignError) { |e| auth_error!(e) }
