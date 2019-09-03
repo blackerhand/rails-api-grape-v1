@@ -15,14 +15,18 @@ module DataBuildHelper
     { meta: meta, data: data }
   end
 
+  def base_num(records)
+    return 0 if records.try(:current_page).nil?
+    (records.current_page - 1) * records.limit_value
+  end
+
   def data_paginate!(records, entities_class, meta = {})
     opts                   = meta.delete(:opts) || {}
     opts[:current_user_id] = current_user_id
-    base_num               = (records.current_page - 1) * records.limit_value
 
     {
       meta: default_meta.merge(pagination(records)).merge(meta),
-      data: records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num + index + 1)) }
+      data: records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
     }
   end
 
@@ -59,10 +63,10 @@ module DataBuildHelper
   def pagination(records)
     {
       pagination: {
-        total_pages:   records.total_pages,
-        current_page:  records.current_page,
-        current_count: records.length,
-        limit_value:   records.limit_value
+        total_pages:   records.try(:total_pages),
+        current_page:  records.try(:current_page),
+        current_count: records.try(:length),
+        limit_value:   records.try(:limit_value)
       }
     }
   end

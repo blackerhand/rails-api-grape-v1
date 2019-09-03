@@ -13,7 +13,7 @@ module AuthHelper
   end
 
   def current_user
-    retrun if @payload.blank?
+    return if @payload.blank?
     @current_user ||= User.find_by(@payload)
   end
 
