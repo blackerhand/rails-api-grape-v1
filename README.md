@@ -87,3 +87,9 @@ rails api 最佳实践.
 - `rake acts_as_taggable_on_engine:install:migrations`
 - `acts_as_commentable_with_threading`
 - `rails generate acts_as_commentable_with_threading_migration`
+- 添加 puma 部署相关配置
+
+### v0.4
+
+- 完善 authenticate_required
+- 完善 owner_required
