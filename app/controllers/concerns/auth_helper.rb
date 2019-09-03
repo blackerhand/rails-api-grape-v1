@@ -9,15 +9,6 @@ module AuthHelper
   end
 
   def authenticate_required?
-    !GRAPE_API::AUTH_UN_REQUIRED.include?(request.path)
-  end
-
-  def current_user
-    return if @payload.blank?
-    @current_user ||= User.find_by(@payload)
-  end
-
-  def current_user_id
-    current_user.try(:id)
+    !GRAPE_API::AUTH_UN_REQUIRED.include?(resource_name)
   end
 end

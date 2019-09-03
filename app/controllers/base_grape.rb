@@ -10,6 +10,7 @@ class BaseGrape < Grape::API
 
   # add the handle need before this code
   mount SignGrape
+  mount V1::PubGrape => '/v1'
 
   get '/' do
     { status: 'ok' }
