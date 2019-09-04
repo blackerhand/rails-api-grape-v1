@@ -93,3 +93,4 @@ rails api 最佳实践.
 
 - 完善 authenticate_required
 - 完善 owner_required
+- 添加 rolify 进行 user 的角色控制
