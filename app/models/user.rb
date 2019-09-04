@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
+  rolify
+
   validates :email, presence: true, uniqueness: true
 
   def payload
