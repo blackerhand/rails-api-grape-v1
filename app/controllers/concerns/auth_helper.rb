@@ -25,4 +25,8 @@ module AuthHelper
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
     authorize(policy_record, policy_method) # if policy_class.instance_methods.include?(policy_method)
   end
+
+  def verify_admin!
+    raise PermissionDeniedError, 'you can\'t access this page' unless current_user.is_a?(Admin)
+  end
 end

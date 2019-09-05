@@ -297,6 +297,7 @@ DEPENDENCIES
   rolify (~> 5.2)
   rubocop
   rubocop-performance
+  sidekiq (~> 5.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

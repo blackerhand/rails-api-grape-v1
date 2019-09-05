@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def controller_name
-    self.source.to_s.match(/v\d+\/\w+_grape/).to_s.classify
+    self.source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.classify
   end
 
   def action_name
@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def policy_class
-    self.source.to_s.match(/v\d+\/\w+_grape/).to_s.sub('grape', 'policy').classify.constantize
+    self.source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.sub('grape', 'policy').classify.constantize
   end
 
   def policy_method
