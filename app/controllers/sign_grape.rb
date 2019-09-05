@@ -4,11 +4,7 @@ class SignGrape < BaseGrape
   helpers Pundit
 
   before do
-    verify_jwt! if authenticate_required?
-
-    policy_class = policy_name.constantize
-    record_class.redefine_singleton_method(:policy_class) { policy_class }
-    authorize(record_class, policy_method) if policy_class.instance_methods.include?(policy_method)
+    verify_jwt! && pundit_authorize if authenticate_required?
   end
 
   rescue_from(SignError) { |e| valid_error!(e) }

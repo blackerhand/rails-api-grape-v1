@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def current_record
-    return if params.id.blank?
+    return if params.id.nil?
     @record ||= record_class.find(params.id)
   end
 end
