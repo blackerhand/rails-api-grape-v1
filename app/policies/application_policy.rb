@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    scope.where(id: record.id).exists?
   end
 
   def create?
@@ -54,7 +54,8 @@ class ApplicationPolicy
   private
 
   def login_required
-    raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    raise Pundit::NotAuthorizedError, 'must be logged in' unless user
+
     true
   end
 
