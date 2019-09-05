@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    @user = user
+    @user   = user
     @record = record
   end
 
@@ -42,12 +42,23 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      @user = user
+      @user  = user
       @scope = scope
     end
 
     def resolve
       scope
     end
+  end
+
+  private
+
+  def login_required
+    raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    true
+  end
+
+  def owner_required
+    user.id == record.owner
   end
 end

@@ -3,9 +3,7 @@ class SignGrape < BaseGrape
   helpers AuthHelper
   helpers Pundit
 
-  before do
-    verify_jwt! && pundit_authorize if authenticate_required?
-  end
+  before { parse_jwt && pundit_authorizef }
 
   rescue_from(SignError) { |e| valid_error!(e) }
   rescue_from(Svc::JwtSignature::SignError) { |e| auth_error!(e) }
