@@ -2,6 +2,7 @@
 module ApplicationHelper
   def current_user
     return if @payload.blank?
+
     @current_user ||= User.find_by(@payload)
   end
 
@@ -14,7 +15,7 @@ module ApplicationHelper
   end
 
   def controller_name
-    self.source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.classify
+    source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.classify
   end
 
   def action_name
@@ -22,7 +23,7 @@ module ApplicationHelper
   end
 
   def policy_class
-    self.source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.sub('grape', 'policy').classify.constantize
+    source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.sub('grape', 'policy').classify.constantize
   end
 
   def policy_method
@@ -30,11 +31,12 @@ module ApplicationHelper
   end
 
   def record_class
-    self.source.to_s.match(/(\w+)_grape/)[1].singularize.classify.safe_constantize
+    source.to_s.match(/(\w+)_grape/)[1].singularize.classify.safe_constantize
   end
 
   def current_record
     return if params.id.nil? || record_class.nil?
-    @record ||= record_class.find(params.id)
+
+    @current_record ||= record_class.find(params.id)
   end
 end

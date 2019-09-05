@@ -17,6 +17,7 @@ module DataBuildHelper
 
   def base_num(records)
     return 0 if records.try(:current_page).nil?
+
     (records.current_page - 1) * records.limit_value
   end
 
