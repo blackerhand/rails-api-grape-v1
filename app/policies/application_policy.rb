@@ -53,13 +53,19 @@ class ApplicationPolicy
 
   private
 
-  def login_required
+  def login_required!
     raise Pundit::NotAuthorizedError, 'must be logged in' unless user
 
     true
   end
 
   def owner_required
-    user.id == record.owner
+    login_required! && user.id == record.try(:user_id)
+  end
+
+  def enabled_required(record_obj = record)
+    raise ActiveRecord::RecordNotFound, "Couldn't find #{record_obj.class} with 'id'=#{record_obj.id}" if record_obj.try(:disabled?)
+
+    true
   end
 end
