@@ -122,6 +122,10 @@ GEM
       grape-swagger (>= 0.31.0)
     grape-swagger-rails (0.3.1)
       railties (>= 3.2.12)
+    graphiql-rails (1.7.0)
+      railties
+      sprockets-rails
+    graphql (1.9.11)
     hashie (3.6.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -282,6 +286,8 @@ DEPENDENCIES
   grape-swagger (~> 0.32)
   grape-swagger-entity (~> 0.3)
   grape-swagger-rails (~> 0.3)
+  graphiql-rails (~> 1.7.0)
+  graphql (~> 1.9)
   hashie (~> 3.6)
   jwt (~> 2.1)
   kaminari (~> 0.17)
