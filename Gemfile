@@ -64,6 +64,9 @@ gem "pundit"
 gem 'graphql', '~> 1.9'
 gem 'graphiql-rails', '~> 1.7.0', group: :development
 
+# like, favorite
+gem 'action-store', '~> 0.4'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
