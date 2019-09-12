@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   rolify
 
+  mount_uploader :avatar, AvatarUploader
+
   action_store :favorite, :post, counter_cache: true, user_counter_cache: true # 收藏
   action_store :like, :post, counter_cache: true, user_counter_cache: true # 点赞
   action_store :unlike, :post, counter_cache: true, user_counter_cache: true # 点踩

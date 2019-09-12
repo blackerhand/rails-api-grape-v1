@@ -7,5 +7,9 @@ module V1
     def post_users_sign_up?
       true
     end
+
+    def put_users_avatar?
+      login_required!
+    end
   end
 end

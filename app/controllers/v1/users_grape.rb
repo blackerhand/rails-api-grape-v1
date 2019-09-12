@@ -49,5 +49,13 @@ module V1
     get 'info' do
       data_record!(@current_user, Entities::User::Info)
     end
+
+    params do
+      requires :avatar, type: File, desc: '头像'
+    end
+    put '/avatar' do
+      current_user.update!(avatar: params[:avatar])
+      data_record!(@current_user, Entities::User::Info)
+    end
   end
 end

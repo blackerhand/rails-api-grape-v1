@@ -40,12 +40,6 @@ gem 'grape', '~> 1.2'
 gem 'hashie', '~> 3.6'
 gem 'grape-entity', '~> 0.7'
 
-# swagger
-gem 'grape-swagger', '~> 0.32' # grape doc
-gem 'grape-swagger-rails', '~> 0.3' # a web page
-gem 'grape-swagger-entity', '~> 0.3'
-
-
 # taggable
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_commentable_with_threading', '~> 2.0.1'
@@ -53,6 +47,7 @@ gem 'acts_as_commentable_with_threading', '~> 2.0.1'
 # paginate
 gem 'kaminari', '~> 0.17'
 
+# background job
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sidekiq', '~> 5.2'
 
@@ -70,6 +65,10 @@ gem 'action-store', '~> 0.4'
 # http client
 gem 'rest-client', '~> 2.0'
 
+# file uploader
+gem 'carrierwave', '~> 2.0'
+gem 'carrierwave-i18n'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -86,6 +85,15 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
+  # swagger
+  gem 'grape-swagger', '~> 0.32' # grape doc
+  gem 'grape-swagger-rails', '~> 0.3' # a web page
+  gem 'grape-swagger-entity', '~> 0.3'
+
+  # format print
+  gem 'awesome_print'
+
+  # capistrano deploy
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-rails', '~> 1.3', require: false
   gem 'capistrano3-puma', '~> 3.1.1'
