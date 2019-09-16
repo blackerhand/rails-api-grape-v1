@@ -54,7 +54,7 @@ module V1
       requires :avatar, type: File, desc: '头像'
     end
     put '/avatar' do
-      current_user.update!(avatar: params[:avatar])
+      current_user.files_avatar.update!(file: params[:avatar])
       data_record!(@current_user, Entities::User::Info)
     end
   end
