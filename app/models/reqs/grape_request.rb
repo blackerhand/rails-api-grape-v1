@@ -13,8 +13,9 @@ module Reqs
     end
 
     def update_response(status, headers, body)
-      self.status_code      = status
-      self.response         = body.to_json if body.to_json.size < GRAPE_API::HTTP_FILE_SIZE_LIMIT
+      self.status_code = status
+      rsp                   = body.body.to_json
+      self.response         = rsp if rsp.size < GRAPE_API::HTTP_FILE_SIZE_LIMIT
       self.response_headers = headers.to_json
 
       save(validate: false) && self
