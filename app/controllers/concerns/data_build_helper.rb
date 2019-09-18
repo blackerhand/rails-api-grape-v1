@@ -21,9 +21,16 @@ module DataBuildHelper
     (records.current_page - 1) * records.limit_value
   end
 
+  def default_opts
+    {
+      current_user_id: current_user_id,
+      current_user:    current_user
+    }
+  end
+
   def data_paginate!(records, entities_class, meta = {})
-    opts                   = meta.delete(:opts) || {}
-    opts[:current_user_id] = current_user_id
+    opts = meta.delete(:opts) || {}
+    opts.merge!(default_opts)
 
     {
       meta: default_meta.merge(pagination(records)).merge(meta),
@@ -32,8 +39,8 @@ module DataBuildHelper
   end
 
   def data_record!(record, entities_class, meta = {})
-    opts                   = meta.delete(:opts) || {}
-    opts[:current_user_id] = current_user_id
+    opts = meta.delete(:opts) || {}
+    opts.merge!(default_opts)
 
     {
       meta: default_meta.merge(meta),
@@ -57,8 +64,15 @@ module DataBuildHelper
       version: request.path.match(%r{\/v(\d+)\/}).try(:[], 1)
     }
 
-    meta[:payload] = @payload || {}
+    meta[:payload]      = @payload || {}
+    meta[:current_user] = current_user_info
     meta
+  end
+
+  def current_user_info
+    return if current_user.blank?
+
+    Entities::User::Info.represent current_user
   end
 
   def pagination(records)
