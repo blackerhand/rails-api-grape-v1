@@ -40,6 +40,10 @@ gem 'grape', '~> 1.2'
 gem 'hashie', '~> 3.6'
 gem 'grape-entity', '~> 0.7'
 
+# swagger
+gem 'grape-swagger', '~> 0.32' # grape doc
+gem 'grape-swagger-entity', '~> 0.3'
+
 # taggable
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_commentable_with_threading', '~> 2.0.1'
@@ -88,9 +92,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # swagger
-  gem 'grape-swagger', '~> 0.32' # grape doc
   gem 'grape-swagger-rails', '~> 0.3' # a web page
-  gem 'grape-swagger-entity', '~> 0.3'
 
   # format print
   gem 'awesome_print'
