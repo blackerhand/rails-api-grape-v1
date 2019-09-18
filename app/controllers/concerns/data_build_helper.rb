@@ -81,7 +81,10 @@ module DataBuildHelper
         total_pages:   records.try(:total_pages),
         current_page:  records.try(:current_page),
         current_count: records.try(:length),
-        limit_value:   records.try(:limit_value)
+        limit_value:   records.try(:limit_value),
+        total_count:   records.try(:total_count),
+        prev_page:     records.try(:prev_page),
+        next_page:     records.try(:next_page)
       }
     }
   end
