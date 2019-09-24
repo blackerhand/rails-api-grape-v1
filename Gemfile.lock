@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/308820773/http-store
+  revision: c10634141e09f2687d51544bba67dd23a6678fa3
+  specs:
+    http_store (0.3.9)
+      activerecord (>= 5.0, < 6.1)
+      hashie (~> 3.0)
+      rails (>= 5, < 7)
+      rest-client (~> 2.0)
+
+GIT
   remote: https://github.com/seuros/capistrano-sidekiq.git
   revision: 9caad25d35b0060d9d0821a5db1f4718b8d2f13e
   specs:
@@ -348,6 +358,7 @@ DEPENDENCIES
   graphiql-rails (~> 1.7.0)
   graphql (~> 1.9)
   hashie (~> 3.6)
+  http_store (= 0.3.9)!
   jwt (~> 2.1)
   kaminari (~> 0.17)
   listen (>= 3.0.5, < 3.2)
@@ -359,7 +370,6 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.2.3)
   rails-i18n (~> 5.1)
-  rest-client (~> 2.0)
   rolify (~> 5.2)
   rspec-rails (~> 3.8)
   rubocop
