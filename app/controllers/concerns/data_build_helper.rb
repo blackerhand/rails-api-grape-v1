@@ -34,7 +34,7 @@ module DataBuildHelper
 
     {
       meta: default_meta.merge(pagination(records)).merge(meta),
-      data: records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
+      data: json_records!(records, entities_class, opts)
     }
   end
 
@@ -46,6 +46,10 @@ module DataBuildHelper
       meta: default_meta.merge(meta),
       data: entities_record(record, entities_class, opts)
     }
+  end
+
+  def json_records!(records, entities_class, opts = {})
+    records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
   end
 
   private
