@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/308820773/http-store
-  revision: c10634141e09f2687d51544bba67dd23a6678fa3
+  revision: d38a7d3b0f0f19a24ef76eb3a766c668871f1cab
   specs:
-    http_store (0.3.9)
+    http_store (0.3.11)
       activerecord (>= 5.0, < 6.1)
       hashie (~> 3.0)
       rails (>= 5, < 7)
@@ -181,7 +181,7 @@ GEM
     method_source (0.9.2)
     mime-types (3.3)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0904)
+    mime-types-data (3.2019.1009)
     mimemagic (0.3.3)
     mini_magick (4.9.5)
     mini_mime (1.0.2)
@@ -358,7 +358,7 @@ DEPENDENCIES
   graphiql-rails (~> 1.7.0)
   graphql (~> 1.9)
   hashie (~> 3.6)
-  http_store (= 0.3.9)!
+  http_store (= 0.3.11)!
   jwt (~> 2.1)
   kaminari (~> 0.17)
   listen (>= 3.0.5, < 3.2)
