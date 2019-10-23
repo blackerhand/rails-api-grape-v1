@@ -6,4 +6,7 @@ module GRAPE_API
 
   PER_PAGE             = 15
   HTTP_FILE_SIZE_LIMIT = 60_000 # Response max size
+
+  RESOURCES_MAP = {
+  }
 end

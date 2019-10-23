@@ -1,19 +1,19 @@
 class User < ApplicationRecord
-  has_secure_password
-  rolify
+  attr_accessor :roles
 
-  has_one :files_avatar, :class_name => 'Files::Avatar', as: :fileable
+  rolify
 
   action_store :favorite, :post, counter_cache: true, user_counter_cache: true # 收藏
   action_store :like, :post, counter_cache: true, user_counter_cache: true # 点赞
   action_store :unlike, :post, counter_cache: true, user_counter_cache: true # 点踩
 
-  validates :email, presence: true, uniqueness: true
-
-  after_create :create_file_avatar
-
   def payload
-    slice(:id)
+    {
+      id:        id,
+      openid:    openid,
+      roles:     roles,
+      resources: resources
+    }
   end
 
   def avatar_url
@@ -27,9 +27,28 @@ class User < ApplicationRecord
     code
   end
 
-  private
+  def self.build_with(payload)
+    return unless payload.is_a?(Hash)
 
-  def create_file_avatar
-    Files::Avatar.create!(fileable: self)
+    payload = Hashie::Mash.new(payload)
+    return if payload.id.blank?
+
+    payload.roles = [payload.roles] unless payload.roles.is_a?(Array)
+    payload.roles = payload.roles.select(&:present?).uniq.map(&:to_sym)
+    user          = find_or_create_by!(openid: payload.id)
+    user.roles    = payload.roles
+    user
+  end
+
+  def resources
+    @roles.map { |role| GRAPE_API::RESOURCES_MAP[role] || [] }.flatten.uniq
+  end
+
+  def has_resources!(resource_name)
+    raise PermissionDeniedError, '没有权限, 请与后台管理员联系' unless has_resources?(resource_name)
+  end
+
+  def has_resources?(resource_name)
+    resources.include?(resource_name)
   end
 end

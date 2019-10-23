@@ -4,7 +4,7 @@ module AuthHelper
     return unless request.headers['Authorization']
 
     payload       = Svc::JwtSignature.verify!(request.headers['Authorization']).first
-    @current_user = User.find(payload['id'])
+    @current_user = User.build_with(payload)
     raise SignError, '校验失败, 请退出重新登录' if @current_user.nil?
 
     @payload = @current_user.payload
