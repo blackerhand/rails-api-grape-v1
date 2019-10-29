@@ -8,7 +8,7 @@ class SignGrape < BaseGrape
     pundit_authorize
   end
 
-  rescue_from(SignError) { |e| valid_error!(e) }
+  rescue_from(SignError) { |e| auth_error!(e) }
   rescue_from(Svc::JwtSignature::SignError) { |e| auth_error!(e) }
   rescue_from(Pundit::NotAuthorizedError) { |e| permit_error!(e) }
 

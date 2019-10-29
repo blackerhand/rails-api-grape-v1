@@ -1,7 +1,7 @@
 # helpers for sign grape
 module AuthHelper
   def parse_jwt
-    return unless request.headers['Authorization']
+    raise SignError, '请登录' unless request.headers['Authorization']
 
     payload       = Svc::JwtSignature.verify!(request.headers['Authorization']).first
     @current_user = User.find(payload['id'])
