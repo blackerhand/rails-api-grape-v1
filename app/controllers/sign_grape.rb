@@ -6,6 +6,7 @@ class SignGrape < BaseGrape
   before do
     parse_jwt
     pundit_authorize
+    set_papertrail_user(current_user.id)
   end
 
   rescue_from(SignError) { |e| auth_error!(e) }

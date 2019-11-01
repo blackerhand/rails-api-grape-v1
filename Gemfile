@@ -54,7 +54,7 @@ gem 'kaminari', '~> 0.17'
 # background job
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'redis-rails', '~> 5.0.2'
-gem 'sidekiq', '~> 6.0.2'
+gem 'sidekiq', '~> 5.2'
 
 # admin role
 gem 'rolify', '~> 5.2'
@@ -74,6 +74,10 @@ gem 'carrierwave-i18n'
 # log store
 gem 'http_store', '0.3.11', require: true, git: 'https://github.com/308820773/http-store'
 # gem 'http_store', require: true, path: 'vendor/http_store'
+
+# version of active_record
+gem 'paper_trail', '~> 10.3'
+gem 'grape-papertrail', '~> 0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
