@@ -20,12 +20,6 @@ gem 'puma', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt', '~> 2.1'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -78,6 +72,9 @@ gem 'http_store', '0.3.15', require: true, git: 'https://github.com/308820773/ht
 # version of active_record
 gem 'paper_trail', '~> 10.3'
 gem 'grape-papertrail', '~> 0.2'
+
+# search
+gem 'ransack', '~> 2.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
