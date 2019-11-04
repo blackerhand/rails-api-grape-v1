@@ -72,7 +72,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-i18n'
 
 # log store
-gem 'http_store', '0.3.11', require: true, git: 'https://github.com/308820773/http-store'
+gem 'http_store', '0.3.15', require: true, git: 'https://github.com/308820773/http-store'
 # gem 'http_store', require: true, path: 'vendor/http_store'
 
 # version of active_record

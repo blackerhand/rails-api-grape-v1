@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/308820773/http-store
-  revision: d38a7d3b0f0f19a24ef76eb3a766c668871f1cab
+  revision: 5d361b031146ac3fba00db8fa2d83321954b76c5
   specs:
-    http_store (0.3.11)
+    http_store (0.3.15)
       activerecord (>= 5.0, < 6.1)
       hashie (~> 3.0)
       rails (>= 5, < 7)
@@ -383,7 +383,7 @@ DEPENDENCIES
   graphiql-rails (~> 1.7.0)
   graphql (~> 1.9)
   hashie (~> 3.6)
-  http_store (= 0.3.11)!
+  http_store (= 0.3.15)!
   jwt (~> 2.1)
   kaminari (~> 0.17)
   listen (>= 3.0.5, < 3.2)
