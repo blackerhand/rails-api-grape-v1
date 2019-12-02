@@ -4,6 +4,6 @@ module GRAPE_API
 
   EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
-  PER_PAGE             = 15
-  HTTP_FILE_SIZE_LIMIT = 60_000 # Response max size
+  PER_PAGE   = 15
+  SEARCH_PER = 10
 end

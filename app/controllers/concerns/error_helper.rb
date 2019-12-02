@@ -15,8 +15,18 @@ module ErrorHelper
     error!(error_message(e, meta), meta[:status])
   end
 
+  def not_allow_error!(e, meta = {})
+    meta[:status] ||= 409
+    error!(error_message(e, meta), meta[:status])
+  end
+
   def error_422!(message, meta = {})
     meta[:status] ||= 422
+    error!(error_message(message, meta), meta[:status])
+  end
+
+  def not_found_error!(message, meta = {})
+    meta[:status] ||= 404
     error!(error_message(message, meta), meta[:status])
   end
 
@@ -27,7 +37,7 @@ module ErrorHelper
   end
 
   def error_meta(e)
-    meta               = default_meta
+    meta               = base_meta
     base_object        = e.instance_variable_get(:@base)
     meta[:base_object] = { type: base_object.class, id: base_object.id } if base_object
     meta[:message]     = meta_error_message(e)

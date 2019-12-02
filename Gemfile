@@ -66,7 +66,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-i18n'
 
 # log store
-gem 'http_store', '0.3.15', require: true, git: 'https://github.com/308820773/http-store'
+gem 'http_store', '0.3.26', require: true, git: 'https://github.com/308820773/http-store'
 # gem 'http_store', require: true, path: 'vendor/http_store'
 
 # version of active_record
@@ -75,6 +75,13 @@ gem 'grape-papertrail', '~> 0.2'
 
 # search
 gem 'ransack', '~> 2.3'
+
+# excel
+gem 'axlsx', '~> 1.3'
+gem 'axlsx_rails', '~> 0.6'
+
+# state
+gem 'aasm', '~> 4.12'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

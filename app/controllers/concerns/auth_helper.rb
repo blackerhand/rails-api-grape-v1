@@ -4,10 +4,10 @@ module AuthHelper
     raise SignError, '请登录' unless request.headers['Authorization']
 
     payload       = Svc::JwtSignature.verify!(request.headers['Authorization']).first
-    @current_user = User.find(payload['id'])
+    @current_user = User.build_with!(payload)
     raise SignError, '校验失败, 请退出重新登录' if @current_user.nil?
 
-    @payload = @current_user.payload
+    @payload = payload.merge(@current_user.payload)
   end
 
   # 执行 pundit 验证, authorize(record, policy_method)
@@ -20,9 +20,10 @@ module AuthHelper
   # 只会校验定义了 policy 的 api, 取消注释 if 即可, 不推荐
   def pundit_authorize
     policy_class_tmp = policy_class # 临时解决
-    policy_record    = current_record || record_class
+    policy_record    = current_record || record_class || policy_class
 
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
+
     authorize(policy_record, policy_method) # if policy_class.instance_methods.include?(policy_method)
   end
 
