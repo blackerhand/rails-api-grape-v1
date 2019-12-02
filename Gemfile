@@ -92,7 +92,24 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-performance'
 
+  # TDD
   gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-activejob', '~> 0.6'
+
+  # BDD
+  gem 'cucumber'
+  gem 'cucumber-rails', require: false
+  gem 'cucumber-api-steps', require: false
+
+  gem 'factory_bot_rails'
+  gem 'ffaker', '~> 2.9'
+  gem 'database_cleaner'
+  gem 'timecop'
+
+  gem 'simplecov', require: false
+
+  # model comment
+  gem 'annotate'
 end
 
 group :development do
