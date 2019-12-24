@@ -1,4 +1,3 @@
-# global helpers
 module ApplicationHelper
   def current_user
     return if @payload.blank?
@@ -57,5 +56,13 @@ module ApplicationHelper
     return [] unless array_params.is_a?(Array)
 
     array_params.map(&:to_hash)
+  end
+
+  def upload_file(file_type, params_file)
+    file_class = file_type.safe_constantize
+    valid_error!('文件类型不正确') if file_class.nil?
+    valid_error!('同一种类型的文件只能上传一个, 请删除后重试') if file_class.enabled.exists?(fileable: current_record)
+
+    @file_object = file_class.create!(fileable: current_record, file: params_file)
   end
 end

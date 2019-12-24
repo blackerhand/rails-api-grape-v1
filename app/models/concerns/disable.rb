@@ -37,11 +37,11 @@ module Disable
     end
 
     before_update do
-      self.created_user_id = PaperTrail.request.whodunnit
+      self.updated_user_id = PaperTrail.request.whodunnit
     end
 
     before_destroy do
-      self.created_user_id = PaperTrail.request.whodunnit
+      self.updated_user_id = PaperTrail.request.whodunnit
     end
   end
 end

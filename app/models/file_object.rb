@@ -1,5 +1,7 @@
 class FileObject < ApplicationRecord
-  belongs_to :fileable, polymorphic: true, touch: true
+  include Disable
+
+  belongs_to :fileable, polymorphic: true
   belongs_to :user, optional: true
 
   mount_uploader :file, FileUploader
@@ -14,5 +16,9 @@ class FileObject < ApplicationRecord
       self.size           = o_file.size
       self.content_digest = Digest::SHA1.hexdigest(o_file.read)
     end
+  end
+
+  def filename_with_ext
+    file.try(:identifier)
   end
 end

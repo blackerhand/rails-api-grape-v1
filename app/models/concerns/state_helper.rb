@@ -10,10 +10,6 @@ module StateHelper
       state_before_type_cast
     end
 
-    def offline_time_display
-      offline_time if state == 'state_offline'
-    end
-
     def available_state_names
       glass = self.class
 

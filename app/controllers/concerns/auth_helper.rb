@@ -7,7 +7,8 @@ module AuthHelper
     @current_user = User.build_with!(payload)
     raise SignError, '校验失败, 请退出重新登录' if @current_user.nil?
 
-    @payload = payload.merge(@current_user.payload)
+    @refresh_token = Svc::JwtSignature.refresh!(request.headers['Authorization'])
+    @payload       = payload.merge(@current_user.payload)
   end
 
   # 执行 pundit 验证, authorize(record, policy_method)

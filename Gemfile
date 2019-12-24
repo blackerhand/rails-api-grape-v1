@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.3.8'
+ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -76,12 +76,15 @@ gem 'grape-papertrail', '~> 0.2'
 # search
 gem 'ransack', '~> 2.3'
 
-# excel
-gem 'axlsx', '~> 1.3'
-gem 'axlsx_rails', '~> 0.6'
-
 # state
 gem 'aasm', '~> 4.12'
+
+## whenever
+#gem 'whenever', require: false
+
+# bugsnage
+gem "bugsnag", "~> 6.12"
+gem "uniform_notifier"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

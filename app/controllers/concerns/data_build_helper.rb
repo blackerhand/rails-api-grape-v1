@@ -38,20 +38,41 @@ module DataBuildHelper
     }
   end
 
+  def format_file_values(filed_values)
+    filed_values.map do |filed_value|
+      case filed_value
+      when Array
+        filed_value.join(',')
+      when TrueClass
+        '是'
+      when FalseClass
+        '否'
+      else
+        filed_value
+      end
+    end
+  end
+
   def data_ransack_file!(records, entities_class, opts = {})
-    thead           = opts.delete(:thead)
+    thead = opts.delete(:thead)
+    thead.push('创建时间')
+
     file_name       = opts.delete(:file_name) || 'export'
     opts[:use_base] = false
 
     data = file_records!(records, entities_class, opts).as_json
     p    = Axlsx::Package.new
 
-    p.workbook.add_worksheet(name: 'Data') do |sheet|
-      sheet.add_row thead if thead.present?
+    p.workbook.add_worksheet(name: '数据列表') do |sheet|
+      types  = thead.length.times.map { :string }
+      widths = thead.length.times.map { 13 }
+
+      sheet.add_row thead, widths: widths, :height => 30, :sz => 13 if thead.present?
 
       data.each do |row|
         row.delete(:id) if opts[:without_id]
-        sheet.add_row row.values
+
+        sheet.add_row format_file_values(row.values), widths: widths, types: types, :height => 30, :sz => 12
       end
     end
 
@@ -59,13 +80,13 @@ module DataBuildHelper
 
     content_type 'application/octet-stream'
     header['Access-Control-Expose-Headers'] = 'Content-Disposition'
-    header['Content-Disposition']           = "attachment; filename=#{file_name}.xlsx"
-    env['api.format']                       = :binary
+    header['Content-Disposition'] = "attachment; filename=#{ERB::Util.url_encode(file_name)}.xlsx"
+    env['api.format']             = :binary
     p.to_stream.read
   end
 
   def file_records!(records, entities_class, opts = {})
-    records.find_each.map { |record| entities_record_no_base(record, entities_class, opts) }
+    records.each.map { |record| entities_record_no_base(record, entities_class, opts) }
   end
 
   def data_record!(record, entities_class, meta = {})
@@ -82,25 +103,26 @@ module DataBuildHelper
     records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
   end
 
-  private
+  def entities_record(record, entities_class, opts = {})
+    opts ||= {}
+    Entities::RecordBase.represent record, opts.merge(glass: entities_class)
+  end
 
   def entities_record_no_base(record, entities_class, opts = {})
     opts ||= {}
     entities_class.represent record, opts
   end
 
-  def entities_record(record, entities_class, opts)
-    opts ||= {}
-    Entities::RecordBase.represent record, opts.merge(glass: entities_class)
-  end
+  private
 
   def base_meta
     request = Grape::Request.new(env)
     {
-      message: '请求成功',
-      path:    request.path,
-      status:  200,
-      version: request.path.match(%r{\/v(\d+)\/}).try(:[], 1)
+      message:       '请求成功',
+      path:          request.path,
+      status:        200,
+      refresh_token: @refresh_token,
+      version:       request.path.match(%r{\/v(\d+)\/}).try(:[], 1)
     }
   end
 
