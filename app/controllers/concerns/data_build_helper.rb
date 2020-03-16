@@ -60,19 +60,19 @@ module DataBuildHelper
     file_name       = opts.delete(:file_name) || 'export'
     opts[:use_base] = false
 
-    data = file_records!(records, entities_class, opts).as_json
+    data = opts.delete(:data) || file_records!(records, entities_class, opts).as_json
     p    = Axlsx::Package.new
 
     p.workbook.add_worksheet(name: '数据列表') do |sheet|
       types  = thead.length.times.map { :string }
       widths = thead.length.times.map { 13 }
 
-      sheet.add_row thead, widths: widths, :height => 30, :sz => 13 if thead.present?
+      sheet.add_row thead, widths: widths, height: 30, sz: 13 if thead.present?
 
       data.each do |row|
         row.delete(:id) if opts[:without_id]
 
-        sheet.add_row format_file_values(row.values), widths: widths, types: types, :height => 30, :sz => 12
+        sheet.add_row format_file_values(row.values), widths: widths, types: types, height: 30, sz: 12
       end
     end
 
@@ -80,13 +80,19 @@ module DataBuildHelper
 
     content_type 'application/octet-stream'
     header['Access-Control-Expose-Headers'] = 'Content-Disposition'
-    header['Content-Disposition'] = "attachment; filename=#{ERB::Util.url_encode(file_name)}.xlsx"
-    env['api.format']             = :binary
+    header['Content-Disposition']           = "attachment; filename=#{ERB::Util.url_encode(file_name)}.xlsx"
+    env['api.format']                       = :binary
     p.to_stream.read
   end
 
   def file_records!(records, entities_class, opts = {})
-    records.each.map { |record| entities_record_no_base(record, entities_class, opts) }
+    records.each.map do |record|
+      if record.is_a?(Hash)
+        entities_record_no_base(record[:record], entities_class, opts.merge(record))
+      else
+        entities_record_no_base(record, entities_class, opts)
+      end
+    end
   end
 
   def data_record!(record, entities_class, meta = {})

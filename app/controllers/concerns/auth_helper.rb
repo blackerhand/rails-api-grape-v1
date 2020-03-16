@@ -1,14 +1,19 @@
 # helpers for sign grape
 module AuthHelper
   def parse_jwt
-    raise SignError, '请登录' unless request.headers['Authorization']
+    return if not_require_login? && request.headers['Authorization'].blank?
+    raise SignError, '请登录' if request.headers['Authorization'].blank?
 
     payload       = Svc::JwtSignature.verify!(request.headers['Authorization']).first
     @current_user = User.build_with!(payload)
     raise SignError, '校验失败, 请退出重新登录' if @current_user.nil?
 
-    @refresh_token = Svc::JwtSignature.refresh!(request.headers['Authorization'])
+    @refresh_token = Svc::JwtSignature.refresh!(payload)
     @payload       = payload.merge(@current_user.payload)
+  end
+
+  def not_require_login?
+    GRAPE_API::NOT_REQUIRE_LOGIN.include?(action_name)
   end
 
   # 执行 pundit 验证, authorize(record, policy_method)
@@ -24,6 +29,7 @@ module AuthHelper
     policy_record    = current_record || record_class || policy_class
 
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
+    raise PermissionDeniedError, '您没有此接口的访问权限, 请联系相关管理人员' unless @payload[:limits].include?(policy_name)
 
     authorize(policy_record, policy_method) # if policy_class.instance_methods.include?(policy_method)
   end

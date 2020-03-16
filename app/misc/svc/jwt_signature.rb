@@ -20,11 +20,8 @@ module Svc
       "Bearer #{JWT.encode payload, ENV['JWT_SECRET'], 'HS256'}"
     end
 
-    def refresh!(token)
-      payload = verify!(token).first
+    def refresh!(payload)
       sign(payload) if payload['exp'] - Time.current.to_i < GRAPE_API::JWT_REFRESH
-    rescue
-      nil
     end
     # rubocop:enable Style/RescueStandardError
   end

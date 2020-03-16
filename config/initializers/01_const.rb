@@ -6,4 +6,6 @@ module GRAPE_API
 
   PER_PAGE   = 15
   SEARCH_PER = 10
+
+  NOT_REQUIRE_LOGIN = %w[post_users_sign_in]
 end
