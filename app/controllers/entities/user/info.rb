@@ -1,7 +1,7 @@
 module Entities
   module User
     class Info < Base
-      expose :nickname, :email, :avatar_url
+      expose :nickname, :email
     end
   end
 end
