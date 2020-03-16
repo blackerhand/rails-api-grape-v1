@@ -29,8 +29,7 @@ module Disable
       update!(disabled_at: nil)
     end
 
-    def before_disabled
-    end
+    def before_disabled; end
 
     before_create do
       self.created_user_id = PaperTrail.request.whodunnit

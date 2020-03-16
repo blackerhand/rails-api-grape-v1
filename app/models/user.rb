@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_secure_password
   rolify
 
-  has_one :files_avatar, :class_name => 'Files::Avatar', as: :fileable
+  has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable
 
   action_store :favorite, :post, counter_cache: true, user_counter_cache: true # 收藏
   action_store :like, :post, counter_cache: true, user_counter_cache: true # 点赞
@@ -37,11 +37,11 @@ class User < ApplicationRecord
     user
   end
 
-  def has_limits!(limit_name)
-    raise PermissionDeniedError, '没有权限, 请与后台管理员联系' unless has_limits?(limit_name)
+  def limits!(limit_name)
+    raise PermissionDeniedError, '没有权限, 请与后台管理员联系' unless limits?(limit_name)
   end
 
-  def has_limits?(limit_name)
+  def limits?(limit_name)
     limits.include?(limit_name.to_s)
   end
 end

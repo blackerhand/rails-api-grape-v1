@@ -1,5 +1,6 @@
 module ApplicationHelper
-  include ResourceHelper, ParamsHelper
+  include ParamsHelper
+  include ResourceHelper
 
   def current_user
     return if @payload.blank?
