@@ -6,6 +6,10 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :code,            limit: 6
       t.string :password_digest
 
+      t.bigint :created_user_id
+      t.bigint :updated_user_id
+      t.datetime :disabled_at
+
       t.timestamps
     end
   end

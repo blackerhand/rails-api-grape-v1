@@ -10,10 +10,13 @@ module AuthHelper
 
     @refresh_token = Svc::JwtSignature.refresh!(payload)
     @payload       = payload.merge(@current_user.payload)
+
+    pundit_authorize
+    set_papertrail_user(current_user_id)
   end
 
   def not_require_login?
-    GRAPE_API::NOT_REQUIRE_LOGIN.include?(action_name)
+    GRAPE_API::NOT_REQUIRE_LOGIN.include?(action_full_name)
   end
 
   # 执行 pundit 验证, authorize(record, policy_method)
@@ -29,9 +32,9 @@ module AuthHelper
     policy_record    = current_record || record_class || policy_class
 
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
-    raise PermissionDeniedError, '您没有此接口的访问权限, 请联系相关管理人员' unless @payload[:limits].include?(policy_name)
+    current_user.limits! policy_name
 
-    authorize(policy_record, policy_method) # if policy_class.instance_methods.include?(policy_method)
+    authorize(policy_record, policy_method)
   end
 
   def verify_admin!

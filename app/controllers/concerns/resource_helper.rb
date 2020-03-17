@@ -1,9 +1,18 @@
 module ResourceHelper
-  def controller_name
+  def controller_class
     source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.classify
   end
 
+  def controller_name
+    source.to_s.match(/(\w+)_grape/)[1]
+  end
+
   def action_name
+    actions = routes.first.origin.gsub(/(\/v\d+)|(:)/, '').split('/').delete_if { |str| str.blank? || str == controller_name }
+    actions.unshift(request_method).join('_')
+  end
+
+  def action_full_name
     request.request_method.downcase + routes.first.origin.gsub(/((\/v\d+)\/|(\/:))|\//, '_')
   end
 
@@ -12,14 +21,27 @@ module ResourceHelper
   end
 
   def policy_method
+    method_name = "#{action_full_name}?".to_sym
+    methods     = policy_class.instance_methods
+    return policy_default_method if !methods.include?(method_name) && methods.include?(policy_default_method)
+
+    method_name
+    policy_default_method
+  end
+
+  def policy_default_method
     "#{action_name}?".to_sym
   end
 
   def policy_name
-    "PATH_#{action_name.upcase}"
+    "PATH_#{action_full_name.upcase}"
   end
 
   def record_class
-    source.to_s.match(/(\w+)_grape/)[1].singularize.classify.safe_constantize
+    controller_name.singularize.classify.safe_constantize
+  end
+
+  def request_method
+    request.request_method.downcase
   end
 end

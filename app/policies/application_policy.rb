@@ -6,49 +6,24 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
-    false
+  def get?
+    true
   end
 
-  def show?
-    scope.where(id: record.id).exists?
+  def post?
+    login_required!
   end
 
-  def create?
-    false
+  def get_id?
+    enabled_required!
   end
 
-  def new?
-    create?
+  def put_id?
+    owner_required! && enabled_required!
   end
 
-  def update?
-    false
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    false
-  end
-
-  def scope
-    Pundit.policy_scope!(user, record.class)
-  end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user  = user
-      @scope = scope
-    end
-
-    def resolve
-      scope
-    end
+  def delete_id?
+    owner_required! && enabled_required!
   end
 
   private
@@ -59,12 +34,12 @@ class ApplicationPolicy
     true
   end
 
-  def owner_required
+  def owner_required!
     login_required! && user.id == record.try(:user_id)
   end
 
-  def enabled_required(record_obj = record)
-    raise ActiveRecord::RecordNotFound, "Couldn't find #{record_obj.class} with 'id'=#{record_obj.id}" if record_obj.try(:disabled?)
+  def enabled_required!(record_obj = record)
+    raise ActiveRecord::RecordNotFound, "Couldn't find #{record_obj.class} with 'id'=#{record_obj.try(:id)}" if record_obj.try(:disabled?)
 
     true
   end

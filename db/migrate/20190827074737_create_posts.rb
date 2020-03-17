@@ -4,6 +4,9 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :title, comment: '标题'
       t.text :desc, comment: '说明'
       t.integer :user_id
+
+      t.bigint :created_user_id
+      t.bigint :updated_user_id
       t.datetime :disabled_at
 
       t.timestamps
