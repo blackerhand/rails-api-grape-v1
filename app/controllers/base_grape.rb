@@ -1,9 +1,11 @@
 # all grape extend it
 class BaseGrape < Grape::API
+  include Grape::Rails::Cache
+
   content_type :json, 'application/json'
   default_format :json
 
-  helpers ApplicationHelper, ErrorHelper, DataBuildHelper
+  helpers ApplicationHelper, ErrorHelper, DataBuildHelper, CacheHelper
 
   # 401
   rescue_from(SignError) { |e| auth_error!(e) }

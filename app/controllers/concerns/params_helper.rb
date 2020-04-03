@@ -13,4 +13,11 @@ module ParamsHelper
 
     array_params.map(&:to_hash)
   end
+
+  def params_blank?(attr)
+    return true if attr.blank?
+    return attr.select { |at| at.present? }.blank? if attr.is_a? Array
+
+    false
+  end
 end
