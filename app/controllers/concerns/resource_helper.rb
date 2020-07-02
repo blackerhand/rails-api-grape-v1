@@ -21,15 +21,6 @@ module ResourceHelper
   end
 
   def policy_method
-    method_name = "#{action_full_name}?".to_sym
-    methods     = policy_class.instance_methods
-    return policy_default_method if !methods.include?(method_name) && methods.include?(policy_default_method)
-
-    method_name
-    policy_default_method
-  end
-
-  def policy_default_method
     "#{action_name}?".to_sym
   end
 

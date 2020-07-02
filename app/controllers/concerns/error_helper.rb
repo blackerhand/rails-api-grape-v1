@@ -47,7 +47,9 @@ module ErrorHelper
 
   def meta_error_message(e)
     message =
-      if e.respond_to?(:full_messages)
+      if e.is_a?(ActiveRecord::RecordNotFound)
+        '该' + I18n.t("activerecord.models.#{e.model.underscore}") + '已被删除'
+      elsif e.respond_to?(:full_messages)
         e.send(:full_messages)
       elsif e.respond_to?(:message)
         e.message
@@ -63,6 +65,8 @@ module ErrorHelper
       case e
       when ActiveModel::Errors
         e.messages.map.each { |key, message| { field: key, message: message } }
+      when ActiveRecord::RecordInvalid
+        e.record.errors.messages.map.each { |key, message| { field: key, message: message } }
       when Grape::Exceptions::ValidationErrors
         e.errors.map.each { |field, messages| { field: field.first, message: messages.map(&:message).join(',') } }
       end

@@ -1,6 +1,7 @@
 # 200 code 返回 data 构建规则
 # 203 表示 token 有更新, 检查 response header Authorization, 得到新的token, 此时应该更新客户端的 token
 # 结构说明 {meta: {*payload, path: '/', version: '1'}, data: {id: '1', type: 'User', attributes: {}}/[]}
+# rubocop:disable Metrics/AbcSize,Metrics/ModuleLength,Metrics/MethodLength
 module DataBuildHelper
   def data!(data)
     meta = default_meta
@@ -13,6 +14,28 @@ module DataBuildHelper
     end
 
     { meta: meta, data: data }
+  end
+
+  def data_client!(client)
+    error_422!(client.response_data) unless client.response_valid?
+    data!(client.response_data)
+  end
+
+  def data_image_client!(client, opts = {})
+    error_422!(client.response_data) unless client.response_valid?
+
+    file_name   = opts.delete(:file_name) || 'qr'
+    opt_headers = opts.delete(:headers) || {}
+
+    opt_headers.each { |k, v| header[k.to_s] = v }
+
+    content_type 'image/jpeg'
+    env['api.format'] = :binary
+    # content_type 'application/octet-stream'
+    header['Content-Disposition']           = "attachment; filename=#{file_name}.jpg"
+    header['Access-Control-Expose-Headers'] = opt_headers.keys.push('Content-Disposition').join(',')
+
+    client.response
   end
 
   def base_num(records)
@@ -64,8 +87,8 @@ module DataBuildHelper
     p    = Axlsx::Package.new
 
     p.workbook.add_worksheet(name: '数据列表') do |sheet|
-      types  = thead.length.times.map { :string }
-      widths = thead.length.times.map { 13 }
+      types  = Array.new(thead.length, :string)
+      widths = Array.new(thead.length, 13)
 
       sheet.add_row thead, widths: widths, height: 30, sz: 13 if thead.present?
 
@@ -106,6 +129,9 @@ module DataBuildHelper
   end
 
   def json_records!(records, entities_class, opts = {})
+    return if records.nil?
+
+    opts.merge!(default_opts)
     records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
   end
 
@@ -159,3 +185,4 @@ module DataBuildHelper
     }
   end
 end
+# rubocop:enable Metrics/AbcSize,Metrics/ModuleLength,Metrics/MethodLength
