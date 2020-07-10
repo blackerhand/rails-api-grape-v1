@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id               :integer          not null, primary key
+#  body             :text(65535)
+#  commentable_type :string(255)
+#  lft              :integer
+#  rgt              :integer
+#  subject          :string(255)
+#  title            :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#  commentable_id   :integer
+#  parent_id        :integer
+#  user_id          :integer          not null
+#
+# Indexes
+#
+#  index_comments_on_commentable_id_and_commentable_type  (commentable_id,commentable_type)
+#  index_comments_on_user_id                              (user_id)
+#
+
 class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
