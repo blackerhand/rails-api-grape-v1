@@ -10,6 +10,7 @@ module V1
 
       auth_error!('The email not exists') if @user.nil?
       auth_error!('The password is incorrect') unless @user.authenticate(params[:passwd])
+      @payload = @user.payload
 
       data!(token: Svc::JwtSignature.sign(@user.payload))
     end
