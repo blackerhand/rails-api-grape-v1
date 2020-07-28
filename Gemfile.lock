@@ -221,7 +221,7 @@ GEM
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.13, < 3)
     jaro_winkler (1.5.3)
-    json (2.2.0)
+    json (2.3.1)
     jsonpath (1.0.5)
       multi_json
       to_regexp (~> 0.2.1)
