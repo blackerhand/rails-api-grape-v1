@@ -5,7 +5,7 @@ module ApplicationHelper
   def current_user
     return if @payload.blank?
 
-    @current_user ||= User.find_by(@payload)
+    @current_user ||= User.find_by(id: @payload['id'])
   end
 
   def current_user_id

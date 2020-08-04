@@ -32,6 +32,7 @@ gem 'figaro', '~> 1.1'
 # grape
 gem 'grape', '~> 1.2'
 gem 'hashie', '~> 3.6'
+gem 'hashie-forbidden_attributes', '~> 0.1.1'
 gem 'grape-entity', '~> 0.7'
 
 # swagger
