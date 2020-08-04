@@ -14,11 +14,7 @@ module V1
       end
     end
     post '/' do
-      attrs = declared_params.post.to_h.merge(user_id: current_user.id)
-
-      @post = Post.new(attrs)
-      @post.save!
-
+      @post = Post.create!(declared_params.post.to_h)
       data_record!(@post, Entities::Post::List)
     end
 
@@ -42,12 +38,8 @@ module V1
         end
       end
       put '/' do
-        attrs = declared_params.post.to_h.merge(user_id: current_user.id)
-
-        @post = Post.new(attrs)
-        @post.save!
-
-        data_record!(@post, Entities::Post::List)
+        current_record.update!(declared_params.post.to_h)
+        data_record!(current_record, Entities::Post::List)
       end
     end
   end
