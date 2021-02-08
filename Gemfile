@@ -63,7 +63,7 @@ gem 'graphiql-rails', '~> 1.7.0', group: :development
 gem 'action-store', '~> 0.4'
 
 # file uploader
-gem 'carrierwave', '~> 2.0'
+gem 'carrierwave', '~> 2.1'
 gem 'carrierwave-i18n'
 
 # log store
