@@ -49,7 +49,7 @@ gem 'kaminari', '~> 0.17'
 # background job
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'redis-rails', '~> 5.0.2'
-gem 'sidekiq', '~> 5.2'
+gem 'sidekiq', '~> 6.4'
 
 # admin role
 gem 'rolify', '~> 5.2'
