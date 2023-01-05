@@ -1,15 +1,23 @@
 module ResourceHelper
+  def controller_path
+    source.to_s.match(/\/v\d+\/(\w+\/)?\w+_grape/).to_s
+  end
+
   def controller_class
-    source.to_s.match(/v\d+\/(\w+\/)?\w+_grape/).to_s.classify
+    controller_path[1..-1].classify
   end
 
   def controller_name
     source.to_s.match(/(\w+)_grape/)[1]
   end
 
+  # def action_name
+  #   actions = routes.first.origin.gsub(/(\/v\d+)|(:)/, '').split('/').delete_if { |str| str.blank? || str == controller_name }
+  #   actions.unshift(request_method).join('_')
+  # end
   def action_name
-    actions = routes.first.origin.gsub(/(\/v\d+)|(:)/, '').split('/').delete_if { |str| str.blank? || str == controller_name }
-    actions.unshift(request_method).join('_')
+    path = routes.first.origin.delete(controller_path)
+    "#{request_method}_#{path.presence || 'index'}"
   end
 
   def action_full_name

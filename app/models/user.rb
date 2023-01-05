@@ -40,10 +40,8 @@ class User < ApplicationRecord
     slice(:id, :limits)
   end
 
-  def gen_code
-    return code if code.present? && Time.current - updated_at < 60
-
-    update!(code: rand(999_999))
+  def gen_code!
+    update!(code: rand(999_999).to_s.rjust(6, '0'))
     code
   end
 

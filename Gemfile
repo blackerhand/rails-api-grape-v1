@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -50,6 +50,7 @@ gem 'kaminari', '~> 0.17'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'redis-rails', '~> 5.0.2'
 gem 'sidekiq', '~> 5.2'
+gem 'redis'
 
 # admin role
 gem 'rolify', '~> 5.2'
@@ -67,7 +68,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-i18n'
 
 # log store
-gem 'http_store', '0.3.26', require: true, git: 'https://github.com/308820773/http-store'
+gem 'http_store', '0.5.3', require: true, git: 'https://github.com/blackerhand/http-store'
 # gem 'http_store', require: true, path: 'vendor/http_store'
 
 # version of active_record
@@ -81,7 +82,7 @@ gem 'ransack', '~> 2.3'
 gem 'aasm', '~> 4.12'
 
 ## whenever
-#gem 'whenever', require: false
+# gem 'whenever', require: false
 
 # bugsnage
 gem "bugsnag", "~> 6.12"
@@ -140,7 +141,6 @@ group :development do
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

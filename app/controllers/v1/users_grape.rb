@@ -28,10 +28,7 @@ module V1
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
     end
     post '/send_mail' do
-      @user = User.find_by(email: params[:email])
-      auth_error!('The email not exists') if @user.nil?
-      UserMailer.reset_email(@user).deliver_now
-      data!('Success')
+      render_service! Users::ResetPasswdMail.execute(params[:email])
     end
 
     params do
@@ -43,8 +40,9 @@ module V1
       @user = User.find_by(email: params[:email])
       auth_error!('The email not exists') if @user.nil?
       auth_error!('The code is invalid') unless @user.code == params[:code]
+
       @user.update!(password: params[:passwd], code: nil)
-      data!('Success')
+      data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
     get 'info' do

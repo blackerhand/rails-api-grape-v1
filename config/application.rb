@@ -42,5 +42,19 @@ module GrapeApi
     config.cache_store              = :redis_store, ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0', { expires_in: 60.minutes }
 
     config.middleware.use HttpStore::Middleware::RequestLog
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.default charse: 'utf-8'
+
+    config.action_mailer.smtp_settings   = {
+      address:              "smtp.mxhichina.com",
+      port:                 "465",
+      domain:               "qiye.aliyun.com",
+      user_name:            "black@paimingjia.com",
+      password:             "YUEye@115",
+      authentication:       :plain,
+      enable_starttls_auto: true,
+      ssl:                  true
+    }
   end
 end

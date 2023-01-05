@@ -3,7 +3,14 @@
 # 结构说明 {meta: {*payload, path: '/', version: '1'}, data: {id: '1', type: 'User', attributes: {}}/[]}
 # rubocop:disable Metrics/AbcSize,Metrics/ModuleLength,Metrics/MethodLength
 module DataBuildHelper
-  def data!(data)
+  def render_service!(rsp, opts = {})
+    status, result, service_opts = rsp
+    opts                         = opts.merge(service_opts) if service_opts.present?
+
+    status ? data!(result, opts) : error_422!(result, opts)
+  end
+
+  def data!(data, opts = {})
     meta = default_meta
 
     if data.is_a?(String)
@@ -13,7 +20,7 @@ module DataBuildHelper
       meta.merge!(data.delete(:meta))
     end
 
-    { meta: meta, data: data }
+    { meta: meta.merge(opts), data: data }
   end
 
   def data_client!(client)
