@@ -19,8 +19,6 @@
 #
 
 class User < ApplicationRecord
-  attr_accessor :limits
-
   has_secure_password
   rolify
 
@@ -33,7 +31,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   def resource_names
-    @resource_names ||= Acl.where(role_id: role_ids)
+    @resource_names ||= Acl.where(role_id: roles.pure_roles.ids)
                            .joins(:resource)
                            .select("resources.name as resource_name")
                            .map(&:resource_name).uniq
@@ -59,5 +57,19 @@ class User < ApplicationRecord
 
     user = find(payload.id)
     user
+  end
+
+  def avatar_url
+    files_avatar.file_url
+  end
+
+  before_create :init_avatar
+
+  def init_avatar
+    return unless files_avatar.nil?
+
+    avatar            = Files::Avatar.new
+    avatar.file       = File.open(Rails.root.join("public/images/fallback/#{id % 10}.png"))
+    self.files_avatar = avatar
   end
 end

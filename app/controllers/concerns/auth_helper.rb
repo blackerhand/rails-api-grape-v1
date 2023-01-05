@@ -19,6 +19,10 @@ module AuthHelper
     GRAPE_API::NOT_REQUIRE_LOGIN.include?(action_full_name)
   end
 
+  def resource_authorize
+    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.has_resources?(action_full_name)
+  end
+
   # 执行 pundit 验证, authorize(record, policy_method)
   # mode-require:
   # 新加一个api 以后, 需要新建一个对应的 policy 文件, 然后定义相应的授权方法
@@ -32,12 +36,12 @@ module AuthHelper
     policy_record    = current_record || record_class || policy_class
 
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
-    current_user.limits! policy_name
-
     authorize(policy_record, policy_method)
+  rescue NoMethodError
+    true
   end
 
   def verify_admin!
-    raise PermissionDeniedError, 'you can\'t access this page' unless current_user.is_a?(Admin)
+    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.is_a?(Admin)
   end
 end

@@ -5,6 +5,7 @@ class AdminGrape < SignGrape
   before do
     parse_jwt
     verify_admin!
+    resource_authorize
     pundit_authorize
   end
 

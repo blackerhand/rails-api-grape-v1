@@ -20,6 +20,9 @@ class Role < ApplicationRecord
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true, optional: true
 
+  scope :pure_roles, -> { where(resource_id: nil) }
+  scope :resource_roles, -> { where.not(resource_id: nil) }
+
   validates :resource_type, inclusion: { in: Rolify.resource_types }, allow_nil: true
 
   scopify
