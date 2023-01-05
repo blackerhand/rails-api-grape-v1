@@ -44,7 +44,7 @@ gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_commentable_with_threading', '~> 2.0.1'
 
 # paginate
-gem 'kaminari', '~> 0.17'
+gem 'kaminari', '~> 1.2'
 
 # background job
 gem 'listen', '>= 3.0.5', '< 3.2'
