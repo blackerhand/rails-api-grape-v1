@@ -32,12 +32,20 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
 
-  def limits
-    @limits || ['admin']
+  def resource_names
+    @resource_names ||= Acl.where(role_id: role_ids)
+                           .joins(:resource)
+                           .select("resources.name as resource_name")
+                           .map(&:resource_name).uniq
+  end
+
+  # 超级管理员默认拥有所有权限，非超级管理员需要判断对于该资源是否有权限
+  def has_resources?(resource_name)
+    has_role?(:super_admin) || resource_names.include?(resource_name)
   end
 
   def payload
-    slice(:id, :limits)
+    slice(:id)
   end
 
   def gen_code!
@@ -49,19 +57,7 @@ class User < ApplicationRecord
     payload = Hashie::Mash.new(payload) rescue Hashie::Mash.new
     raise SignError, '登录失败, 请重试' if payload.id.blank?
 
-    payload.limits = payload.limits.to_a.map(&:to_s).select(&:present?).uniq
-    raise SignError, '用户权限信息不存在, 请检查' if payload.limits.blank?
-
-    user        = find(payload.id)
-    user.limits = payload.limits
+    user = find(payload.id)
     user
-  end
-
-  def limits!(limit_name)
-    raise PermissionDeniedError, '您没有此接口的访问权限, 请联系相关管理人员' unless limits?(limit_name)
-  end
-
-  def limits?(limit_name)
-    limits.include?(limit_name.to_s) || limits.include?('admin')
   end
 end

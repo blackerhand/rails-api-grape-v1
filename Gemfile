@@ -55,6 +55,7 @@ gem 'redis'
 # admin role
 gem 'rolify', '~> 5.2'
 gem "pundit"
+gem 'ancestry'
 
 # GraphQL
 gem 'graphql', '~> 1.9'
