@@ -490,8 +490,8 @@ DEPENDENCIES
   puma (~> 3.0)
   pundit
   rack-cors
-  rails (~> 5.2.3)
-  rails-i18n (~> 5.1)
+  rails
+  rails-i18n
   ransack (~> 2.3)
   redis
   redis-rails (~> 5.0.2)
