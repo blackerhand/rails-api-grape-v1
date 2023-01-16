@@ -6,6 +6,10 @@ class ApplicationPolicy
     @record = record
   end
 
+  def default_author
+    true
+  end
+
   def get?
     true
   end

@@ -11,7 +11,6 @@ module AuthHelper
     @refresh_token = Svc::JwtSignature.refresh!(payload)
     @payload       = payload.merge(@current_user.payload)
 
-    pundit_authorize
     set_papertrail_user(current_user_id)
   end
 
@@ -38,7 +37,7 @@ module AuthHelper
     policy_record.define_singleton_method(:policy_class) { policy_class_tmp }
     authorize(policy_record, policy_method)
   rescue NoMethodError
-    true
+    authorize(policy_record, 'default_author')
   end
 
   def verify_admin!

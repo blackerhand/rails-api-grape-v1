@@ -15,4 +15,7 @@ class AdminGrape < SignGrape
   rescue_from(PermissionDeniedError) { |e| permit_error!(e) }
 
   mount V1::Admin::UsersGrape => '/v1/admin/users'
+  mount V1::Admin::PostsGrape => '/v1/admin/posts'
+  mount V1::Admin::RolesGrape => '/v1/admin/roles'
+  mount V1::Admin::ResourcesGrape => '/v1/admin/resources'
 end

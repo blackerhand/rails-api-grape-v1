@@ -17,6 +17,9 @@
 #
 
 class Role < ApplicationRecord
+  scopify
+
+  has_and_belongs_to_many :resources, join_table: :acls
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true, optional: true
 
@@ -24,6 +27,4 @@ class Role < ApplicationRecord
   scope :resource_roles, -> { where.not(resource_id: nil) }
 
   validates :resource_type, inclusion: { in: Rolify.resource_types }, allow_nil: true
-
-  scopify
 end
