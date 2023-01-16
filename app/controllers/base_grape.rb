@@ -41,6 +41,10 @@ class BaseGrape < Grape::API
 
   add_swagger_documentation(
     mount_path:  '/api/swagger',
-    doc_version: '0.1.0'
-  )
+    doc_version: '0.1.0',
+    tags:        [
+                   { name: 'admin_resources', description: '权限管理' },
+                   { name: 'admin_roles', description: '角色管理' },
+                   { name: 'users', description: '用户' },
+                 ])
 end

@@ -12,6 +12,23 @@ module V1
         data_paginate!(@roles, Entities::Role::List)
       end
 
+      desc '创建角色' do
+        summary '创建角色'
+        detail '创建角色'
+        tags ['admin_roles']
+      end
+      params do
+        requires :name, type: String, allow_blank: false, desc: '名称'
+        requires :resource_ids, type: Array[Integer], desc: '权限id列表'
+      end
+      after_validation do
+        valid_error!('权限 id 不正确, 请检查重试') unless Resource.where(id: params.resource_ids).count == params.resource_ids.count
+      end
+      post '/' do
+        @role = Role.create!(declared_params.to_h)
+        data_record!(@role, Entities::Role::Detail)
+      end
+
       route_param :id, requirements: { id: /[0-9]+/ } do
         desc '角色详情' do
           summary '角色详情'
@@ -34,9 +51,19 @@ module V1
         after_validation do
           valid_error!('权限 id 不正确, 请检查重试') unless Resource.where(id: params.resource_ids).count == params.resource_ids.count
         end
-        post '/' do
+        put '/' do
           current_record.update(declared_params)
           data_record!(current_record, Entities::Role::Detail)
+        end
+
+        desc '删除角色' do
+          summary '删除角色'
+          detail '删除角色'
+          tags ['admin_roles']
+        end
+        delete '/' do
+          current_record.destroy
+          data!('删除成功')
         end
       end
     end

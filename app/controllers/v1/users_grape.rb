@@ -1,6 +1,11 @@
 module V1
   # user apis
   class UsersGrape < SignGrape
+    desc '登录' do
+      summary '登录'
+      detail '登录'
+      tags ['users']
+    end
     params do
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
       requires :passwd, type: String
@@ -15,6 +20,11 @@ module V1
       data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
+    desc '注册' do
+      summary '注册'
+      detail '注册'
+      tags ['users']
+    end
     params do
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
       requires :nickname, :passwd, allow_blank: false, type: String
@@ -24,6 +34,11 @@ module V1
       data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
+    desc '发送重置密码邮件' do
+      summary '发送重置密码邮件'
+      detail '发送重置密码邮件'
+      tags ['users']
+    end
     params do
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
     end
@@ -31,6 +46,11 @@ module V1
       render_service! Users::ResetPasswdMail.execute(params[:email])
     end
 
+    desc '重置密码' do
+      summary '重置密码'
+      detail '重置密码'
+      tags ['users']
+    end
     params do
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
       requires :code, regexp: /^\d{6}$/
@@ -45,10 +65,20 @@ module V1
       data!(token: Svc::JwtSignature.sign(@user.payload))
     end
 
+    desc '用户信息' do
+      summary '用户信息'
+      detail '用户信息'
+      tags ['users']
+    end
     get 'info' do
       data_record!(@current_user, Entities::User::Info)
     end
 
+    desc '修改用户头像' do
+      summary '修改用户头像'
+      detail '修改用户头像'
+      tags ['users']
+    end
     params do
       requires :avatar, type: File, desc: '头像'
     end

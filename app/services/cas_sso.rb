@@ -14,6 +14,7 @@ class CasSso < BaseService
     elsif safe_xpath?(doc, '//cas:authenticationFailure')
       ele  = doc.xpath('//cas:authenticationFailure').first
       code = ele.attributes['code']&.text.to_s.strip
+
       [false, { code: code, message: ele.text.strip }]
     else
       [false, { message: 'xml 解析错误', xml: rsp.body }]
@@ -26,14 +27,6 @@ class CasSso < BaseService
     doc.xpath(path).present?
   rescue Nokogiri::XML::XPath::SyntaxError
     false
-  end
-
-  def self.parse_error_msg(ele)
-    if ele.present?
-
-    else
-
-    end
   end
 
   def self.error
@@ -53,7 +46,6 @@ class CasSso < BaseService
   end
 
   def self.url_encode(str)
-    CGI::escape(str)
+    CGI.escape(str)
   end
-
 end
