@@ -41,6 +41,6 @@ module AuthHelper
   end
 
   def verify_admin!
-    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.is_a?(Admin)
+    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.is_a?(Admin) && current_user.enabled?
   end
 end

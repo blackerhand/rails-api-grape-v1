@@ -19,6 +19,7 @@
 #
 
 class User < ApplicationRecord
+  include Disable
   has_secure_password
   rolify
 
@@ -63,7 +64,7 @@ class User < ApplicationRecord
     files_avatar.file_url
   end
 
-  before_create :init_avatar
+  after_create :init_avatar
 
   def init_avatar
     return unless files_avatar.nil?

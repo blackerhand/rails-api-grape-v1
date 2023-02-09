@@ -27,6 +27,7 @@ module V1
     end
     params do
       requires :email, allow_blank: false, regexp: GRAPE_API::EMAIL_REGEX
+      requires :passwd, type: String
       requires :nickname, :passwd, allow_blank: false, type: String
     end
     post '/sign_up' do
